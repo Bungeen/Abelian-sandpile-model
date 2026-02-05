@@ -42,12 +42,22 @@ bool DoOneIteration(matrix* plane, matrix* plane_iteration) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc == 1) {
-        std::cerr << "Missing any arguments" << std::endl;
+    ParsedArguments* parsed_argv = ParserProcess(argc, argv);
+
+    if (parsed_argv->invalid_argument) {
+        std::cerr << "Invalid or missing arguments. Use -h or --help to get more information." << std::endl;
         return -1;
     }
 
-    ParsedArguments* parsed_argv = ParserProcess(argc, argv);
+    if (parsed_argv->help_input) {
+        std::cout << "-i, --input= - input tsv file. Each line is X Y Number_of_grains_of_sand separated by tab symbol" << std::endl;
+        std::cout << "-o, --output= - output directory for .bmp files" << std::endl;
+        std::cout << "-m, --max-iter= - an additional argument for setting up max iterations. Default: until the end of the simulation" << std::endl;
+        std::cout << "-f, --freq= - an additional argument for setting up frequency of creating .bmp files. Default: only last iteration will be saved" << std::endl;
+        std::cout << "-h, --help - get this message" << std::endl;
+
+        return 0;
+    }
 
     std::ifstream fin;
     fin.open(parsed_argv->input_file);

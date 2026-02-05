@@ -34,7 +34,20 @@ ParsedArguments* ParserProcess(int argc, char** argv) {
             if (result.is_correct) {
                 parser_result->frequency = result.value;
             }
+        } else if (StrCmp(current_arg, kHelpArgShort) == 0) {
+            parser_result->help_input = true;
+        } else if (StrCmp(current_arg, kHelpArg) == 0) {
+            parser_result->help_input = true;
+        } else {
+            parser_result->invalid_argument = true;
         }
     }
+
+    if (parser_result->help_input)
+        return parser_result;
+
+    if (!parser_result->input_file || !parser_result->output_dir)
+        parser_result->invalid_argument = true;
+
     return parser_result;
 }
