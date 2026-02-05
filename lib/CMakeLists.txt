@@ -1,0 +1,5 @@
+add_subdirectory(tsv_parser)
+add_subdirectory(str_functions)
+add_subdirectory(parsing_argv)
+add_subdirectory(resize_matrix)
+add_subdirectory(matrix_converter)
